@@ -1,0 +1,12 @@
+[Unit]
+Description=Dockpidy
+After=mopidy.service
+Requires=mopidy.service
+
+[Service]
+TimeoutStartSec=0
+Restart=always
+ExecStart=/home/rafa/projects/mopidy/dockpidy -unit mopidy -port 8080
+
+[Install]
+WantedBy=multi-user.target

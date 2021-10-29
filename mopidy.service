@@ -1,0 +1,27 @@
+[Unit]
+Description=Mopidy Container
+After=docker.service
+Requires=docker.service
+
+[Service]
+TimeoutStartSec=0
+Restart=always
+ExecStartPre=-/usr/bin/docker stop %n
+ExecStartPre=-/usr/bin/docker rm %n
+EnvironmentFile=/home/rafa/projects/mopidy/.env
+ExecStart=/usr/bin/docker run --rm --name %n \
+	--device /dev/snd \
+	--ipc=host \
+	--privileged \
+	-v /home/rafa/beets/cache:/opt/mopidy/cache \
+	-v /home/rafa/beets/music:/opt/mopidy/music:ro \
+	-v /home/rafa/beets/mopidy:/opt/mopidy/data \
+	-v /home/rafa/beets/mopidy:/var/lib/mopidy/.config \
+	-p 6600:6600/tcp -p 6680:6680/tcp \
+	--init \
+	mopidy:v0 \
+        -o tidal/username=$TIDAL_USERNAME \
+        -o tidal/password=$TIDAL_PASSWORD
+
+[Install]
+WantedBy=multi-user.target

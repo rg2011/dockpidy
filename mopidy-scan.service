@@ -1,0 +1,7 @@
+[Unit]
+Description=Scan local library
+Requires=mopidy.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/docker exec mopidy.service mopidy local scan

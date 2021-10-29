@@ -1,0 +1,8 @@
+[Unit]
+Description=Scans local library nightly
+
+[Timer]
+OnCalendar=daily
+
+[Install]
+WantedBy=timers.target
